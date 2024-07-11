@@ -16,16 +16,21 @@ $(document).ready(function() {
     if ($('#sales_chart').length > 0) {
         var columnCtx = document.getElementById("sales_chart"),
             columnConfig = {
-                colors: ['#7638ff', '#fda600'],
+                colors: ['#0000FF', '#28C76F','#EA5455'],
                 series: [{
-                    name: "Received",
+                    name: "Inbound",
                     type: "column",
-                    data: [70, 150, 80, 180, 150, 175, 201, 60, 200, 120, 190, 160, 50]
+                    data: [70, 150, 80, 180, 150, 175, 201]
                 }, {
-                    name: "Pending",
+                    name: "Outbound",
                     type: "column",
-                    data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16, 80]
-                }],
+                    data: [23, 42, 35, 27, 43, 22, 17]
+                }, {
+                    name: "Missed",
+                    type: "column",
+                    data: [23, 42, 35, 27, 43, 22, 17]
+                }
+                ],
                 chart: {
                     type: 'bar',
                     fontFamily: 'Poppins, sans-serif',
@@ -50,11 +55,11 @@ $(document).ready(function() {
                     colors: ['transparent']
                 },
                 xaxis: {
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                    categories: ['2024-07-04', '2024-07-05', '2024-07-06', '2024-07-07', '2024-07-08', '2024-07-09', '2024-07-10'],
                 },
                 yaxis: {
                     title: {
-                        text: '$ (thousands)'
+                        text: 'Count'
                     }
                 },
                 fill: {
@@ -71,6 +76,7 @@ $(document).ready(function() {
         var columnChart = new ApexCharts(columnCtx, columnConfig);
         columnChart.render();
     }
+
     if ($('#invoice_chart').length > 0) {
         var pieCtx = document.getElementById("invoice_chart"),
             pieConfig = {
