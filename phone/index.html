@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <link rel="icon" type="image/gif" href="../img/favicon.ico" />
+
+    <title>ctxSip - Javascript SIP client</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../phone/css/style.css">
+    <link rel="stylesheet" href="../phone/css/dashboardStyle.css">
+
+</head>
+
+<body>
+    <div class="top-nav-bar">
+
+        <div class="flex-start">
+            <div class="nav-bar-ready">
+                <div id="txtRegStatus"></div>
+            </div>
+        </div>
+        <div class="flex-container">
+            
+            <img id="btnMissedCall" src="../img/notification.png" alt="Call" style="width: 35px; height: 35px; cursor: pointer;"/>
+
+            
+            <div class="navbar-right-name">
+                
+                <div>Test</div>
+                <div>
+                    <h6 id="btnDemo">Not Connected</h6>
+                </div>
+
+
+            </div>
+            <div class="navbar-right">
+                <div class="profile">
+                    <img src="../img/agent.png" alt="Call" style="width: 40px; height: 40px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="body-content">
+        <!-- left menu bar -->
+        <div id="menuContainer" class="left-menu-container">
+            <div class="menu-buttons">
+                <div class="btn-row">
+                    <button id="btnDashboard" class="btn btn-info btn-color">
+                        <img src="../img/dashboard.png" alt="Call" style="width: 40px; height: 40px; " />
+                        <div>Dashboard</div>
+                    </button>
+                    <button id="btnContacts" class="btn btn-info btn-color">
+                        <img src="../img/contacts.png" alt="Call" style="width: 40px; height: 40px; " />
+                        <div>Contacts</div>
+                    </button>
+                    <button id="btnIncoming" class="btn btn-info btn-color">
+                        <img src="../img/inbound.png" alt="Call" style="width: 40px; height: 40px; " />
+                        <div>Incoming</div>
+                    </button>
+                    <button id="btnOutbound" class="btn btn-info btn-color">
+                        <img src="../img/outbound.png" alt="Call" style="width: 40px; height: 40px; " />
+                        <div>Outgoing</div>
+                    </button>
+                    <!-- <button id="btnMissedCall" class="btn btn-info btn-color">
+                        <img src="../img/missedcall.png" alt="Call" style="width: 40px; height: 40px; " />
+                        <div>Missed Call</div>
+                    </button>
+                    <button id="btnSetting" class="btn btn-info btn-color" style="margin-top: 200px;">
+                        <img src="../img/settings.png" alt="Call" style="width: 40px; height: 40px;" />
+                        <div>Settings</div>
+                    </button> -->
+                </div>
+            </div>
+        </div>
+        <div class="second-left-container">
+            <!-- KeyPad container -->
+            <div class="keypad-container">
+                <div class="left-container">
+                    <input type="text" id="numDisplay" class="form-control" placeholder="Mobile Number" />
+                    <div class="keypad">
+                        <button class="digit" data-digit="1">
+                            <div class="button-text">
+                                <h3>1</h3>
+                                <p> </p>
+                            </div>
+                        </button>
+                        <button class="digit" data-digit="2">
+                            <div class="button-text">
+                                <h3>2</h3>
+                                <p>ABC</p>
+                            </div>
+                        </button>
+                        <button class="digit" data-digit="3">
+                            <div class="button-text">
+                                <h3>3</h3>
+                                <p>DEF</p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="keypad">
+                        <button class="digit" data-digit="4">
+                            <div class="button-text">
+                                <h3>4</h3>
+                                <p>GHI</p>
+                            </div>
+                        </button>
+                        <button class="digit" data-digit="5">
+                            <div class="button-text">
+                                <h3>5</h3>
+                                <p>JKL</p>
+                            </div>
+                        </button>
+                        <button class="digit" data-digit="6">
+                            <div class="button-text">
+                                <h3>6</h3>
+                                <p>MNO</p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="keypad">
+                        <button class="digit" data-digit="7">
+                            <div class="button-text">
+                                <h3>7</h3>
+                                <p>PQRS</p>
+                            </div>
+                        </button>
+                        <button class="digit" data-digit="8">
+                            <div class="button-text">
+                                <h3>8</h3>
+                                <p>TUV</p>
+                            </div>
+                        </button>
+                        <button class="digit" data-digit="9">
+                            <div class="button-text">
+                                <h3>9</h3>
+                                <p>WZXY</p>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="keypad">
+                        <button class="digit-star" data-digit="*">
+                            <h2>*</h2>
+                        </button>
+                        <button class="digit" data-digit="0">0</button>
+                        <button class="digit" data-digit="#">#</button>
+                    </div>
+                    <div class="callButton">
+                        <button id="btnCall" class="btn btn-lg btn-success">
+                            <img src="../img/call.png" alt="Call" style="width: 20px; height: 20px; ">
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="vertical-line"></div>
+        </div>
+
+        <div class="right-main-container">
+            <div class="second-nav-bar">
+                <div class="button-space">
+                    <button id="btnfavorite" type="button" class="btn  btn-info btn-color-top"
+                        style="border-radius: 100px;">Favorite</button>
+                </div>
+                <div class="button-space">
+                    <button id="btnactivecall" type="button" class="btn btn-info btn-color-top"
+                        style="border-radius: 100px;">Active call</button>
+                </div>
+                <div class="button-space">
+                    <button id="btnrecentcall" type="button" class="btn  btn-info btn-color-top"
+                        style="border-radius: 100px;">Recent</button>
+                </div>
+                <div class="button-space">
+                    <button id="btnmissedcall" type="button" class="btn  btn-info btn-color-top"
+                        style="border-radius: 100px;">Missed call</button>
+                </div>
+            </div>
+            <hr class="custom-hr">
+
+          
+
+            <!-- Call Timer -->
+            <div id="callTimer" style="font-size: 20px; margin-bottom: 10px;"></div>
+            <!-- In-Call Controls -->
+            <div id="inCallControls" style="display: none;">
+                <button id="muteCall" class="btn btn-warning">Mute</button>
+                <button id="unmuteCall" class="btn btn-warning" style="display: none;">Unmute</button>
+                <button id="holdCall" class="btn btn-info">Hold</button>
+                <button id="unholdCall" class="btn btn-info" style="display: none;">Unhold</button>
+                <button id="transferCall" class="btn btn-primary">Transfer</button>
+                <button id="endCall" class="btn btn-danger">End Call</button>
+            </div>
+
+
+
+            <div>
+                <div class="right-container" id="callLog">
+                    <div id="sip-logitems"></div>
+                </div>
+
+                <!-- call controls -->
+                <div class="right-container" id="callongoing">
+
+                    <div id="sip-ongoing">
+                        <div id="callTimer" style="font-size: 20px; margin-bottom: 10px;"></div>
+                    </div>
+                </div>
+
+                <!-- Inbound Call Log -->
+                <div class="right-container hidden" id="inboundCallLog">
+                    <div id="sip-inbound-logitems" class="scrollable-container"></div>
+                </div>
+
+                <!-- Outbound call Log -->
+                <div class="right-container hidden" id="outboundCallLog">
+                    <div id="sip-outbound-logitems" class="scrollable-container"></div>
+                </div>
+
+                <!-- Missed call Log -->
+                <div class="right-container hidden" id="missedCallLog">
+                    <div id="sip-missed-logitems" class="scrollable-container"></div>
+                </div>
+
+                <!-- Contact list -->
+                <div class="right-container hidden" id="contactsContainer">
+                    <div id="contactsList" class="scrollable-container"></div>
+                </div>
+
+                <!-- Dashboard -->
+                <div class="right-container hidden" id="dashboardContainer">
+
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="dash-widget">
+                                <div class="dash-widgetimg">
+                                    <span><img src="../phone/img/dash1.svg" alt="img"></span>
+                                </div>
+                                <div class="dash-widgetcontent">
+                                    <h5><span class="counters" data-count="10">10</span></h5>
+                                    <h6>Total Calls</h6>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="dash-widget dash1">
+                                <div class="dash-widgetimg">
+                                    <span><img src="../phone/img/dash2.svg" alt="img"></span>
+                                </div>
+                                <div class="dash-widgetcontent">
+                                    <h5><span class="counters" data-count="3">3</span></h5>
+                                    <h6>Inbound Calls</h6>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="dash-widget dash2">
+                                <div class="dash-widgetimg">
+                                    <span><img src="../phone/img/dash3.svg" alt="img"></span>
+                                </div>
+                                <div class="dash-widgetcontent">
+                                    <h5><span class="counters" data-count="3">3</span></h5>
+                                    <h6>Outbound Calls</h6>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12">
+                                <div class="dash-widget dash3">
+                                <div class="dash-widgetimg">
+                                    <span><img src="../phone/img/dash4.svg" alt="img"></span>
+                                </div>
+                                <div class="dash-widgetcontent">
+                                    <h5><span class="counters" data-count="4">4</span></h5>
+                                    <h6>Missed Calls</h6>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-12 d-flex">
+                                <div class="card flex-fill">
+                                <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title mb-0">Inbound & Outbound</h5>
+                                    <div class="graph-sets">
+                                    <ul>
+                                        <li><span>Inbound</span></li>
+                                        <li><span>Outbound</span></li>
+                                        <li><span>Missed</span></li>
+                                    </ul>
+                                    <div class="dropdown">
+                                        <button class="btn btn-white btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                                        2024
+                                        <img src="../phone/img/dropdown.svg" alt="img" class="ms-2">
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li><a href="javascript:void(0);" class="dropdown-item">2023</a></li>
+                                        <li><a href="javascript:void(0);" class="dropdown-item">2022</a></li>
+                                        <li><a href="javascript:void(0);" class="dropdown-item">2021</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                    </div>
+                                    
+                                </div>
+                                    <div class="card-body">
+                                        <div id="invoice_chart"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                
+                  
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+
+    <!-- Phone interface hidden by default -->
+    <div id="phoneInterface" style="display: none;">
+        <div id="txtRegStatus"></div>
+        <div id="txtCallStatus"></div>
+        <div class="desktop-container">
+
+
+            <div class="content-container">
+
+              
+
+
+            </div>
+        </div>
+        <audio id="ringtone" src="sounds/incoming.mp3" preload="auto" loop></audio>
+        <audio id="ringbacktone" src="sounds/outgoing.mp3" preload="auto" loop></audio>
+        <audio id="dtmfTone" src="sounds/dtmf.mp3" preload="auto"></audio>
+        <audio id="audioRemote" autoplay></audio>
+    </div>
+
+    <!-- Incoming Call Modal -->
+    <div class="modal fade" id="incomingCallModal" tabindex="-1" aria-labelledby="incomingCallModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="incomingCallModalLabel">Incoming Call</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="transferCallInput" class="transfer-style" style="display: none;">
+                        <input type="text" id="transferTarget" class="form-control"
+                            placeholder="Enter destination number">
+                        <div class="transfer-flex">
+                            <button type="button" id="transferCall" class="btn btn-success"
+                                style="margin-top: 5px; margin-right: 10px; ">Transfer</button>
+                            <button type="button" id="cancelTransfer" class="btn btn-danger"
+                                style="margin-top: 5px;">Cancel</button>
+                        </div>
+                    </div>
+                    <img id="incomecallImage" class="income-call" src="../img/income.png" />
+                    <p class="incoming-text" id="incomingCallInfo"></p>
+                    <p class="incoming-text" id="incomingCallNumber"></p>
+                    <div id="callTimer" style="font-size: 20px; margin-bottom: 10px;"></div>
+                    <div id="callActions" class="button-action">
+                        <button type="button" id="answerCall" class="btn btn-success">Answer</button>
+                        <button type="button" id="rejectCall" class="btn btn-danger">Reject</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Outgoing Call Modal -->
+    <div class="modal fade" id="outgoingCallModal" tabindex="-1" role="dialog" aria-labelledby="outgoingCallModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="outgoingCallModalLabel">Outgoing Call</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="outgoingCallInfo"></p>
+                    <div id="callTimer" style="font-size: 20px; margin-bottom: 10px;"></div>
+                    <div id="inCallActions" style="margin-top: 10px;">
+                        <button id="holdCallModal" class="btn btn-info">Hold</button>
+                        <button id="unholdCallModal" class="btn btn-info" style="display: none;">Unhold</button>
+                        <button id="showTransferCall" class="btn btn-primary">Transfer</button>
+                        <button id="showTransferCallRed" class="btn btn-danger">Transfer</button>
+                        <button id="endCallModal" class="btn btn-danger">End Call</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Call Contact Modal -->
+    <div class="modal fade" id="callContactModal" tabindex="-1" role="dialog" aria-labelledby="callContactModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="callContactModalLabel">Make a Call</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to call <span id="callContactName"></span> at <span id="callContactNumber"></span>?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="confirmCallButton">Call</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- In-Call Controls -->
+    <div id="inCallControls" style="display: none;">
+        <button id="muteCall" class="btn btn-warning">Mute</button>
+        <button id="unmuteCall" class="btn btn-warning" style="display: none;">Unmute</button>
+        <button id="holdCall" class="btn btn-info">Hold</button>
+        <button id="unholdCall" class="btn btn-info" style="display: none;">Unhold</button>
+        <button id="transferCall" class="btn btn-primary">Transfer</button>
+        <button id="endCall" class="btn btn-danger">End Call</button>
+    </div>
+
+    <form class="modal fade" id="mdlDemo" tabindex="-1" role="dialog" aria-labelledby="btnDemo" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Enter SIP Credentials</h4>
+                </div>
+                <div class="modal-body">
+                    <p>To use our demo you will need your SIP credentials from your account. All fields are required.
+                    </p>
+                    <div class="form-group">
+                        <label>Display Name:</label>
+                        <input type="text" name="Display" class="form-control" placeholder="i.e. Ben Franklin" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Sip User:</label>
+                                <input type="text" name="User" class="form-control" placeholder="i.e. sipuser" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>WS URL:</label>
+                                <input type="text" name="WSServer" class="form-control"
+                                    placeholder="i.e. wss://sip.example.com:5060/" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Sip Pass:</label>
+                                <input type="password" name="Pass" class="form-control" placeholder="i.e. supaSekret!"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Sip Realm:</label>
+                                <input type="text" name="Realm" class="form-control" placeholder="i.e. sip.example.com"
+                                    required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnConfig">Launch Phone</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script src="scripts/SIP.js/sip.js"></script>
+    <script src="../phone/plugins/apexchart/apexcharts.min.js"></script>
+    <script src="../phone/plugins/apexchart/chart-data.js"></script>
+    <script src="scripts/moment.js/moment.min.js"></script>
+    <script src="../phone/scripts/indexScript,js"></script>
+    
+   
+</body>
+
+</html>

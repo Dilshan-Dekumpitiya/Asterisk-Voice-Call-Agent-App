@@ -1,0 +1,33 @@
+{
+    "contacts": [
+      {
+        "name": "Alice Johnson",
+        "phone": "+1234567890"
+      },
+      {
+        "name": "Bob Smith",
+        "phone": "+0987654321"
+      },
+      {
+        "name": "Charlie Brown",
+        "phone": "+1122334455"
+      },
+      {
+        "name": "David Wilson",
+        "phone": "+2233445566"
+      },
+      {
+        "name": "Eve Davis",
+        "phone": "+3344556677"
+      },
+      {
+        "name": "Chandima",
+        "phone": "0787733966"
+      },
+      {
+        "name": "DMS Number",
+        "phone": "0761604153"
+      }
+    ]
+  }
+  

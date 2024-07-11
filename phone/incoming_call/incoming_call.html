@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incoming Call</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h3>Incoming Call</h3>
+        <p id="callerInfo"></p>
+        <button id="answerCall" class="btn btn-success">Answer</button>
+        <button id="rejectCall" class="btn btn-danger">Reject</button>
+    </div>
+
+    <script>
+        let callSession;
+
+        function setCallerInfo(info) {
+            document.getElementById('callerInfo').innerText = info;
+        }
+
+        function setCallSession(session) {
+            callSession = session;
+        }
+
+        document.getElementById('answerCall').addEventListener('click', () => {
+            if (callSession) {
+                callSession.accept({
+                    media: {
+                        constraints: { audio: true, video: false },
+                        render: { remote: document.getElementById('audioRemote') },
+                        RTCConstraints: { optional: [{ DtlsSrtpKeyAgreement: true }] }
+                    }
+                });
+                window.close();
+            }
+        });
+
+        document.getElementById('rejectCall').addEventListener('click', () => {
+            if (callSession) {
+                callSession.reject();
+                window.close();
+            }
+        });
+    </script>
+</body>
+</html>
