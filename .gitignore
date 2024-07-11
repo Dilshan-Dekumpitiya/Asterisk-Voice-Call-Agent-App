@@ -5,3 +5,4 @@ phone/scripts/config.js
 config.codekit
 *.sublime-project
 *.sublime-workspace
+.vscode
