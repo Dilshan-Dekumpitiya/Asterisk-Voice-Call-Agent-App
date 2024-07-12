@@ -10,6 +10,12 @@ const pool = mysql.createPool({
   port: process.env.DB_PORT || 3306
 });
 
+// Log environment variables to ensure they are loaded correctly (Don't use in production)
+console.log('DB_HOST:', process.env.DB_HOST);
+console.log('DB_USER:', process.env.DB_USER);
+console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
+console.log('DB_DATABASE:', process.env.DB_DATABASE);
+
 // Attempt to connect to MySQL
 pool.getConnection((err, connection) => {
   if (err) {

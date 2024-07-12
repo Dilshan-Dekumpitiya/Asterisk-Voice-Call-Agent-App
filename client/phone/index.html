@@ -248,9 +248,22 @@
                                     <span><img src="../phone/img/dash1.svg" alt="img"></span>
                                 </div>
                                 <div class="dash-widgetcontent">
-                                    <h5><span class="counters" data-count="10">10</span></h5>
+                                    <h5><span id="callCount" class="counters" data-count="10">10</span></h5>
                                     <h6>Total Calls</h6>
                                 </div>
+
+                                <script>
+                                    // Fetch data from API endpoint
+                                    fetch('http://localhost:3000/api/data')
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            // Update the call count in the HTML
+                                            const callCountElement = document.getElementById('callCount');
+                                            callCountElement.textContent = data.record_count;
+                                        })
+                                        .catch(error => console.error('Error fetching data:', error));
+                                </script>
+
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
