@@ -391,7 +391,7 @@
                                     
                                 </div>
                                     <div class="card-body">
-                                        <div id="sales_chart"></div>
+                                        <div id="bar_chart"></div>
                                     </div>
                                 </div>
 
@@ -421,87 +421,6 @@
 
                         </div>
 
-
-                        <!-- <script>
-                            async function fetchServiceLevel() {
-                                try {
-                                    const response = await fetch('http://localhost:3000/api/service-level');
-                                    const data = await response.json();
-                                    return data.service_level;
-                                } catch (error) {
-                                    console.error('Error fetching service level:', error);
-                                    return 0; // Default to 0 if there's an error
-                                }
-                            }
-                    
-                            async function renderGaugeChart() {
-                                const serviceLevel = await fetchServiceLevel();
-                    
-                                var options = {
-                                    series: [serviceLevel], // Set the series value to the fetched service level
-                                    chart: {
-                                        type: 'radialBar',
-                                        height: 650,
-                                        offsetY: -20,
-                                        sparkline: {
-                                            enabled: true
-                                        }
-                                    },
-                                    plotOptions: {
-                                        radialBar: {
-                                            startAngle: -90,
-                                            endAngle: 90,
-                                            track: {
-                                                background: "#e7e7e7",
-                                                strokeWidth: '97%',
-                                                margin: 5, // margin is in pixels
-                                                dropShadow: {
-                                                    enabled: true,
-                                                    top: 2,
-                                                    left: 0,
-                                                    color: '#999',
-                                                    opacity: 1,
-                                                    blur: 2
-                                                }
-                                            },
-                                            dataLabels: {
-                                                name: {
-                                                    show: false
-                                                },
-                                                value: {
-                                                    offsetY: -2,
-                                                    fontSize: '22px'
-                                                }
-                                            }
-                                        }
-                                    },
-                                    grid: {
-                                        padding: {
-                                            top: -10
-                                        }
-                                    },
-                                    fill: {
-                                        type: 'gradient',
-                                        gradient: {
-                                            shade: 'light',
-                                            shadeIntensity: 0.4,
-                                            inverseColors: false,
-                                            opacityFrom: 1,
-                                            opacityTo: 1,
-                                            stops: [0, 50, 53, 91]
-                                        },
-                                    },
-                                    labels: ['Average Results'],
-                                };
-                    
-                                var chart = new ApexCharts(document.querySelector("#gauge_chart"), options);
-                                chart.render();
-                            }
-                    
-                            if (document.querySelector('#gauge_chart')) {
-                                renderGaugeChart();
-                            }
-                        </script> -->
                     </div>
 
                 </div>

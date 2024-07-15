@@ -1,6 +1,8 @@
 'use strict';
 
 $(document).ready(function() {
+
+    //service level
     async function fetchServiceLevel() {
         try {
             const response = await fetch('http://localhost:3000/api/service-level');
@@ -91,66 +93,134 @@ $(document).ready(function() {
         renderGaugeChart();
     }
 
-    if ($('#sales_chart').length > 0) {
-        var columnCtx = document.getElementById("sales_chart"),
-            columnConfig = {
-                colors: ['#0000FF', '#28C76F','#EA5455'],
-                series: [{
-                    name: "Inbound",
-                    type: "column",
-                    data: [70, 150, 80, 180, 150, 175, 201]
-                }, {
-                    name: "Outbound",
-                    type: "column",
-                    data: [23, 42, 35, 27, 43, 22, 17]
-                }, {
-                    name: "Missed",
-                    type: "column",
-                    data: [23, 42, 35, 27, 43, 22, 17]
-                }],
-                chart: {
-                    type: 'bar',
-                    fontFamily: 'Poppins, sans-serif',
-                    height: 350,
-                    toolbar: {
-                        show: false
-                    }
+    //bar chart
+    async function fetchDailyCallCounts() {
+        try {
+            const response = await fetch('http://localhost:3000/api/dailyCallCounts');
+            const data = await response.json();
+            console.log("Chart Data",data);
+            return data;
+        } catch (error) {
+            console.error('Error fetching daily call counts:', error);
+            return [];
+        }
+    }
+
+    async function renderBarChart() {
+        const dailyCallCounts = await fetchDailyCallCounts();
+
+        const dates = dailyCallCounts.reduce((acc, curr) => {
+            if (!acc.includes(curr.date)) {
+                acc.push(curr.date);
+            }
+            return acc;
+        }, []);
+
+        const inboundData = dates.map(date => {
+            const count = dailyCallCounts.find(item => item.date === date && item.type === 'inbound');
+            return count ? count.count : 0;
+        });
+
+        const outboundData = dates.map(date => {
+            const count = dailyCallCounts.find(item => item.date === date && item.type === 'outbound');
+            return count ? count.count : 0;
+        });
+
+        const missedData = dates.map(date => {
+            const count = dailyCallCounts.find(item => item.date === date && item.type === 'missed');
+            return count ? count.count : 0;
+        });
+
+        var columnCtx = document.getElementById("bar_chart");
+        var columnConfig = {
+            colors: ['#0000FF', '#28C76F', '#EA5455'],
+            series: [{
+                name: "Inbound",
+                type: "column",
+                data: inboundData
+            }, {
+                name: "Outbound",
+                type: "column",
+                data: outboundData
+            }, {
+                name: "Missed",
+                type: "column",
+                data: missedData
+            }],
+            chart: {
+                type: 'bar',
+                fontFamily: 'Poppins, sans-serif',
+                height: 350,
+                toolbar: {
+                    show: false
+                }
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '60%',
+                    endingShape: 'rounded'
                 },
-                plotOptions: {
-                    bar: {
-                        horizontal: false,
-                        columnWidth: '60%',
-                        endingShape: 'rounded'
-                    },
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                stroke: {
-                    show: true,
-                    width: 2,
-                    colors: ['transparent']
-                },
-                xaxis: {
-                    categories: ['2024-07-04', '2024-07-05', '2024-07-06', '2024-07-07', '2024-07-08', '2024-07-09', '2024-07-10'],
-                },
-                yaxis: {
-                    title: {
-                        text: 'Count'
-                    }
-                },
-                fill: {
-                    opacity: 1
-                },
-                tooltip: {
-                    y: {
-                        formatter: function(val) {
-                            return val + " Calls"
-                        }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: dates,
+            },
+            yaxis: {
+                title: {
+                    text: 'Count'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function(val) {
+                        return val + " Calls"
                     }
                 }
-            };
+            }
+        };
+
         var columnChart = new ApexCharts(columnCtx, columnConfig);
         columnChart.render();
+
+         // Update the chart data every 5 seconds
+         setInterval(async () => {
+            const updatedData = await fetchDailyCallCounts();
+
+            const updatedInboundData = dates.map(date => {
+                const count = updatedData.find(item => item.date === date && item.type === 'inbound');
+                return count ? count.count : 0;
+            });
+
+            const updatedOutboundData = dates.map(date => {
+                const count = updatedData.find(item => item.date === date && item.type === 'outbound');
+                return count ? count.count : 0;
+            });
+
+            const updatedMissedData = dates.map(date => {
+                const count = updatedData.find(item => item.date === date && item.type === 'missed');
+                return count ? count.count : 0;
+            });
+
+            columnChart.updateSeries([
+                { data: updatedInboundData },
+                { data: updatedOutboundData },
+                { data: updatedMissedData }
+            ]);
+        }, 5000);
+    }
+
+    if ($('#bar_chart').length > 0) {
+        renderBarChart();
     }
 });
