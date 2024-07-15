@@ -248,33 +248,90 @@
                                     <span><img src="../phone/img/dash1.svg" alt="img"></span>
                                 </div>
                                 <div class="dash-widgetcontent">
-                                    <h5><span id="callCount" class="counters" data-count="10">10</span></h5>
+                                    <h5><span id="TotalCallCount" class="counters" data-count="10">10</span></h5>
                                     <h6>Total Calls</h6>
                                 </div>
 
                                 <script>
-                                    // Fetch data from API endpoint
-                                    fetch('http://localhost:3000/api/data')
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            // Update the call count in the HTML
-                                            const callCountElement = document.getElementById('callCount');
-                                            callCountElement.textContent = data.record_count;
-                                        })
-                                        .catch(error => console.error('Error fetching data:', error));
+                                    // Function to fetch data from API endpoints and update call counts
+                                    function updateTotalCallCounts() {
+                                        // Fetch inbound call count
+                                        fetch('http://localhost:3000/api/inboundCallCount')
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                const inboundCallCountElement = document.getElementById('InboundCallCount');
+                                                inboundCallCountElement.textContent = data.inbound_call_count;
+                                                return data.inbound_call_count;
+                                            })
+                                            .then(inboundCount => {
+                                                // Fetch outbound call count
+                                                return fetch('http://localhost:3000/api/outboundCallCount')
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        const outboundCallCountElement = document.getElementById('OutboundCallCount');
+                                                        outboundCallCountElement.textContent = data.outbound_call_count;
+                                                        return inboundCount + data.outbound_call_count;
+                                                    });
+                                            })
+                                            .then(partialTotal => {
+                                                // Fetch missed call count
+                                                return fetch('http://localhost:3000/api/missedCallCount')
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        const missedCallCountElement = document.getElementById('MissedCallCount');
+                                                        missedCallCountElement.textContent = data.missed_call_count;
+                                                        return partialTotal + data.missed_call_count;
+                                                    });
+                                            })
+                                            .then(total => {
+                                                // Update total call count
+                                                const totalCallCountElement = document.getElementById('TotalCallCount');
+                                                totalCallCountElement.textContent = total;
+                                            })
+                                            .catch(error => console.error('Error fetching data:', error));
+                                    }
+                                
+                                    // Update call counts every 5 seconds (5000 milliseconds)
+                                    setInterval(updateTotalCallCounts, 5000);
+                                
+                                    // Initial call to update the call counts immediately on page load
+                                    updateTotalCallCounts();
                                 </script>
+                                
 
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
                                 <div class="dash-widget dash1">
-                                <div class="dash-widgetimg">
-                                    <span><img src="../phone/img/dash2.svg" alt="img"></span>
-                                </div>
-                                <div class="dash-widgetcontent">
-                                    <h5><span class="counters" data-count="3">3</span></h5>
-                                    <h6>Inbound Calls</h6>
-                                </div>
+                                    <div class="dash-widgetimg">
+                                        <span><img src="../phone/img/dash2.svg" alt="img"></span>
+                                    </div>
+                                    <div class="dash-widgetcontent">
+                                        <h5><span id="InboundCallCount" class="counters" data-count="3">3</span></h5>
+                                        <h6>Inbound Calls</h6>
+                                    </div>
+
+                                    <script>
+                                        // Function to fetch data from API and inbound call count
+                                    function updateInboundCallCount() {
+                                        fetch('http://localhost:3000/api/inboundCallCount')
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                // Assuming 'record_count' is the key in the JSON response with the call count
+                                                const callCountElement = document.getElementById('InboundCallCount');
+                                                callCountElement.textContent = data.inbound_call_count;
+                                                
+                                            })
+                                            .catch(error => console.error('Error fetching data:', error));
+                                    }
+
+                                    // Update call count every 5 seconds (5000 milliseconds)
+                                    setInterval(updateInboundCallCount, 5000);
+
+                                    // Initial call to update the call count immediately on page load
+                                    updateInboundCallCount();
+                                </script>
+
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
@@ -283,9 +340,31 @@
                                     <span><img src="../phone/img/dash3.svg" alt="img"></span>
                                 </div>
                                 <div class="dash-widgetcontent">
-                                    <h5><span class="counters" data-count="3">3</span></h5>
+                                    <h5><span id="OutboundCallCount" class="counters" data-count="3">3</span></h5>
                                     <h6>Outbound Calls</h6>
                                 </div>
+
+                                <script>
+                                    // Function to fetch data from API and outbound call count
+                                function updateOutboundCallCount() {
+                                    fetch('http://localhost:3000/api/outboundCallCount')
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            // Assuming 'record_count' is the key in the JSON response with the call count
+                                            const callCountElement = document.getElementById('OutboundCallCount');
+                                            callCountElement.textContent = data.outbound_call_count;
+                                            
+                                        })
+                                        .catch(error => console.error('Error fetching data:', error));
+                                }
+
+                                // Update call count every 5 seconds (5000 milliseconds)
+                                setInterval(updateOutboundCallCount, 5000);
+
+                                // Initial call to update the call count immediately on page load
+                                updateOutboundCallCount();
+                            </script>
+
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12">
@@ -294,9 +373,31 @@
                                     <span><img src="../phone/img/dash4.svg" alt="img"></span>
                                 </div>
                                 <div class="dash-widgetcontent">
-                                    <h5><span class="counters" data-count="4">4</span></h5>
+                                    <h5><span id="MissedCallCount" class="counters" data-count="4" >4</span></h5>
                                     <h6>Missed Calls</h6>
                                 </div>
+
+                                        <script>
+                                            // Function to fetch data from API and missed call count
+                                        function updateMissedCallCount() {
+                                            fetch('http://localhost:3000/api/missedCallCount')
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    // Assuming 'record_count' is the key in the JSON response with the call count
+                                                    const callCountElement = document.getElementById('MissedCallCount');
+                                                    callCountElement.textContent = data.missed_call_count;
+                                                    
+                                                })
+                                                .catch(error => console.error('Error fetching data:', error));
+                                        }
+
+                                        // Update call count every 5 seconds (5000 milliseconds)
+                                        setInterval(updateMissedCallCount, 5000);
+
+                                        // Initial call to update the call count immediately on page load
+                                        updateMissedCallCount();
+                                    </script>
+
                                 </div>
                             </div>
                         </div>
