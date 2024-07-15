@@ -20,8 +20,30 @@ router.post('/login', (req, res) => {
       }
   
       if (results.length > 0) {
-        // Successful login
-        res.json({ success: true });
+         // Successful login
+         const loginDate = new Date();
+
+         console.log("Login successful for extension:", extensionNumber);
+
+
+
+         // Insert login record into agent_login_logout table
+         const insertQuery = `
+           INSERT INTO asterisk_cdr_rports.agent_login_logout (extension, loginDate)
+           VALUES (?, ?)
+         `;
+ 
+         db.query(insertQuery, [extensionNumber, loginDate], (insertError, insertResults) => {
+           if (insertError) {
+             console.error('Error inserting login record:', insertError);
+             res.status(500).json({ error: 'Internal Server Error' });
+             return;
+           }
+
+           console.log("Login record inserted for extension:", extensionNumber);
+ 
+           res.json({ success: true });
+         });
       } else {
         // Invalid credentials
         res.status(401).json({ error: 'Invalid credentials' });
