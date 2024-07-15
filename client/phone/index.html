@@ -31,7 +31,8 @@
             
             <div class="navbar-right-name">
                 
-                <div id="testName">Test</div>
+                <div id="registeredAgentName">Test</div>
+                <div id="registeredAgentExtension">Test</div>
                 <div>
                     <h6 id="btnDemo">Not Connected</h6>
                 </div>
@@ -44,12 +45,10 @@
                     // Retrieve extensionNumber from URL query parameter
                     const urlParams = new URLSearchParams(window.location.search);
                     const extensionNumber = urlParams.get('extension');
+                    const username = urlParams.get('username');
         
-                    // Update the div with id 'testName'
-                    var divTest = document.getElementById('testName');
-                    if (divTest) {
-                        divTest.textContent = extensionNumber;
-                    }
+                    document.getElementById('registeredAgentName').textContent = `${username}`;
+                    document.getElementById('registeredAgentExtension').textContent = `${extensionNumber}`;
                 });
             </script>
             <div class="navbar-right">

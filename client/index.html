@@ -204,14 +204,11 @@
                              // Wait for response to ensure element is available
                             const data = await response.json();
 
-                            var divTest = document.getElementById('testName');
-                            if (divTest) {
-                                divTest.textContent = extensionNumber;
-                            }
-
-
                              // Redirect with extensionNumber as query parameter
-                             window.location.href = `phone/index.html?extension=${extensionNumber}`;
+                            // window.location.href = `phone/index.html?extension=${extensionNumber}`;
+
+                            window.location.href = `phone/index.html?extension=${extensionNumber}&username=${data.username}`;
+                            
                         } else {
                             const errorMessage = await response.json();
                             console.error('Login error:', errorMessage);

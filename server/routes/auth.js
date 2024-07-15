@@ -22,6 +22,7 @@ router.post('/login', (req, res) => {
       if (results.length > 0) {
          // Successful login
          const loginDate = new Date();
+         const username = results[0].username; // Fetch username from query results
 
          console.log("Login successful for extension:", extensionNumber);
 
@@ -42,7 +43,7 @@ router.post('/login', (req, res) => {
 
            console.log("Login record inserted for extension:", extensionNumber);
  
-           res.json({ success: true });
+           res.json({ username: username, success: true });
          });
       } else {
         // Invalid credentials
