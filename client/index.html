@@ -142,7 +142,7 @@
                     <div class="text-input-conyainer">
 
                         <div class="form-group">
-                            <input type="text" class="form-control" id="extensionNumber"
+                            <input type="text" class="form-control" id="extensionNumber" name="extension"
                                 style="height: 50px; font-size: 18px; width: 350px;"
                                 placeholder="Enter Extension Number">
                         </div>
@@ -200,7 +200,18 @@
                         });
 
                         if (response.ok) {
-                        window.location.href = "phone/index.html"; // Redirect on success
+
+                             // Wait for response to ensure element is available
+                            const data = await response.json();
+
+                            var divTest = document.getElementById('testName');
+                            if (divTest) {
+                                divTest.textContent = extensionNumber;
+                            }
+
+
+                             // Redirect with extensionNumber as query parameter
+                             window.location.href = `phone/index.html?extension=${extensionNumber}`;
                         } else {
                             const errorMessage = await response.json();
                             console.error('Login error:', errorMessage);

@@ -31,13 +31,27 @@
             
             <div class="navbar-right-name">
                 
-                <div>Test</div>
+                <div id="testName">Test</div>
                 <div>
                     <h6 id="btnDemo">Not Connected</h6>
                 </div>
 
 
             </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Retrieve extensionNumber from URL query parameter
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const extensionNumber = urlParams.get('extension');
+        
+                    // Update the div with id 'testName'
+                    var divTest = document.getElementById('testName');
+                    if (divTest) {
+                        divTest.textContent = extensionNumber;
+                    }
+                });
+            </script>
             <div class="navbar-right">
                 <div class="profile">
                     <img src="../img/agent.png" alt="Call" style="width: 40px; height: 40px;">
