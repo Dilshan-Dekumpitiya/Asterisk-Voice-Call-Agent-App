@@ -151,15 +151,15 @@
                                 style="height: 50px; font-size: 18px; width: 350px;" placeholder="Password">
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <input type="password" class="form-control" id="confirmInputPassword1"
                                 style="height: 50px; font-size: 18px; width: 350px;" placeholder="Confirm Password">
-                        </div>
+                        </div> -->
 
                         <div id="error-message" role="alert" class="alert alert-danger" style="display: none;">Do not
                             leave fields empty</div>
                         <div id="error-message-withdb" role="alert" class="alert alert-danger" style="display: none;">Not a Registered User</div>
-                        <div id="error-message-password" role="alert" class="alert alert-warning" style="display: none;">Password not equal with Confirm Password</div>
+                        <div id="error-message-password" role="alert" class="alert alert-warning" style="display: none;">Agent Registered but Check Password</div>
                         <div id="success-message" role="alert" class="alert alert-success" style="display: none;">
                             Success! Redirecting...</div>
                         <div class="text-center">
@@ -176,20 +176,20 @@
         document.getElementById('btnLogin').addEventListener('click', async function () {
             var extensionNumber = document.getElementById('extensionNumber').value;
             var password = document.getElementById('exampleInputPassword1').value;
-            var confirmPassword = document.getElementById('confirmInputPassword1').value;
+           // var confirmPassword = document.getElementById('confirmInputPassword1').value;
             var errorMessage = document.getElementById('error-message');
-            var errorMessagepasswordConfirm = document.getElementById('error-message-password');
+            var errorMessagepassword = document.getElementById('error-message-password');
             var successMessage = document.getElementById('success-message');
             var errorMessageDB = document.getElementById('error-message-withdb');
 
-            if (extensionNumber === '' || password === '' || confirmPassword === '') {
+            if (extensionNumber === '' || password === '') {
                 errorMessage.style.display = 'block';
                 successMessage.style.display = 'none';
                 setTimeout(function() {
                     errorMessage.style.display = 'none';
                 }, 2000); // Hide error message after 2 seconds
             } else {
-                if (password === confirmPassword) {
+                if (password) {
                     try {
                         const response = await fetch('http://localhost:3000/auth/login', {
                         method: 'POST',
@@ -204,11 +204,8 @@
                              // Wait for response to ensure element is available
                             const data = await response.json();
 
-                             // Redirect with extensionNumber as query parameter
-                            // window.location.href = `phone/index.html?extension=${extensionNumber}`;
-
                             window.location.href = `phone/index.html?extension=${extensionNumber}&username=${data.username}`;
-                            
+
                         } else {
                             const errorMessage = await response.json();
                             console.error('Login error:', errorMessage);
@@ -225,10 +222,10 @@
                     }
                 }
                 else {
-                    errorMessagepasswordConfirm.style.display = 'block';
+                    errorMessagepassword.style.display = 'block';
                     successMessage.style.display = 'none';
                     setTimeout(function() {
-                        errorMessagepasswordConfirm.style.display = 'none';
+                        errorMessagepassword.style.display = 'none';
                         }, 2000); // Hide error message after 2 seconds
                 }
 
