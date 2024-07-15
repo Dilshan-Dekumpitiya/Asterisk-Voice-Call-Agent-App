@@ -156,8 +156,9 @@
                                 style="height: 50px; font-size: 18px; width: 350px;" placeholder="Confirm Password">
                         </div>
 
-                        <div id="error-message" role="alert" class="alert alert-warning" style="display: none;">Do not
+                        <div id="error-message" role="alert" class="alert alert-danger" style="display: none;">Do not
                             leave fields empty</div>
+                        <div id="error-message-withdb" role="alert" class="alert alert-danger" style="display: none;">Not a Registered User</div>
                         <div id="error-message-password" role="alert" class="alert alert-warning" style="display: none;">Password not equal with Confirm Password</div>
                         <div id="success-message" role="alert" class="alert alert-success" style="display: none;">
                             Success! Redirecting...</div>
@@ -172,29 +173,55 @@
     </div>
 
     <script>
-        document.getElementById('btnLogin').addEventListener('click', function () {
+        document.getElementById('btnLogin').addEventListener('click', async function () {
             var extensionNumber = document.getElementById('extensionNumber').value;
             var password = document.getElementById('exampleInputPassword1').value;
             var confirmPassword = document.getElementById('confirmInputPassword1').value;
             var errorMessage = document.getElementById('error-message');
             var errorMessagepasswordConfirm = document.getElementById('error-message-password');
             var successMessage = document.getElementById('success-message');
+            var errorMessageDB = document.getElementById('error-message-withdb');
 
             if (extensionNumber === '' || password === '' || confirmPassword === '') {
                 errorMessage.style.display = 'block';
                 successMessage.style.display = 'none';
+                setTimeout(function() {
+                    errorMessage.style.display = 'none';
+                }, 2000); // Hide error message after 2 seconds
             } else {
-                errorMessage.style.display = 'none';
-                successMessage.style.display = 'block';
                 if (password === confirmPassword) {
-                    setTimeout(function () {
-                        document.getElementById('loginForm').action = "phone/index.html";
-                        document.getElementById('loginForm').submit();
-                    }, 1000);
+                    try {
+                        const response = await fetch('http://localhost:3000/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ extensionNumber, password })
+                        });
+
+                        if (response.ok) {
+                        window.location.href = "phone/index.html"; // Redirect on success
+                        } else {
+                            const errorMessage = await response.json();
+                            console.error('Login error:', errorMessage);
+                            errorMessageDB.style.display = 'block';
+                            successMessage.style.display = 'none';
+                            setTimeout(function() {
+                                errorMessageDB.style.display = 'none';
+                            }, 2000); // Hide error message after 2 seconds
+                            // Display error message to user
+                        }
+                    } catch (error) {
+                        console.error('Login error:', error);
+                        // Handle network or other errors
+                    }
                 }
                 else {
                     errorMessagepasswordConfirm.style.display = 'block';
                     successMessage.style.display = 'none';
+                    setTimeout(function() {
+                        errorMessagepasswordConfirm.style.display = 'none';
+                        }, 2000); // Hide error message after 2 seconds
                 }
 
             }

@@ -17,7 +17,10 @@ app.use(bodyParser.json());
 
 // Routes
 const apiRoutes = require('./routes/api');
+const authRoutes = require('./routes/auth');
+
 app.use('/api', apiRoutes);
+app.use('/auth', authRoutes);
 
 // Start server
 app.listen(port, () => {
