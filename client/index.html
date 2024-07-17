@@ -204,7 +204,10 @@
                              // Wait for response to ensure element is available
                             const data = await response.json();
 
-                            window.location.href = `phone/index.html?extension=${extensionNumber}&username=${data.username}`;
+                        
+                            window.location.href = `phone/index.html?extension=${extensionNumber}&username=${data.username}&password=${password}`;
+                            
+                            //window.location.href = `phone/index.html?extension=${extensionNumber}&username=${data.username}`;
 
                         } else {
                             const errorMessage = await response.json();

@@ -5,12 +5,16 @@ $(document).ready(function () {
     // Show the dashboard container after the page loads
     $('#dashboardContainer').fadeIn('slow').removeClass('hidden');
 
+    // Retrieve extensionNumber from URL query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const extensionNumber = urlParams.get('extension');
+    const password = urlParams.get('password');
 
     var user = {
-        Display: "6002",
-        User: "6002",
+        Display: extensionNumber,
+        User: extensionNumber,
         WSServer: "wss://172.20.10.100:8089/ws",
-        Pass: "12345",
+        Pass: password,
         Realm: "172.20.10.100"
     };
 
