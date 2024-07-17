@@ -257,6 +257,17 @@ body::before {
     flex-direction: column;
 }
 
+.modal-body-logout {
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Ensures items are in a row */
+
+    gap: 3px; /* Adjust this value to control spacing between items */
+    padding: 10px; /* Add padding around the items */
+}
+
 .income-call {
     width: 200px;
     margin-bottom: 20px;
@@ -264,6 +275,24 @@ body::before {
 
 .modal-dialog {
     margin-top: 50px;
+}
+.modal-footer-logout{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin: 20px;
+}
+
+#logoutCancel{
+    margin-right: 15px;
+    width: 70px;
+}
+
+#confirmLogoutBtn{
+    margin-right: 15px;
+    width: 70px;
+    
+   
 }
 
 .incoming-text {
@@ -583,3 +612,25 @@ body::before {
     color: rgb(21, 20, 20);
     margin-bottom: 10px;
 }
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 50px; /* Adjust as needed */
+    background-color: #ffffff;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    
+
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.logout-text {
+    color: red;
+    font-weight: bold;
+}
+

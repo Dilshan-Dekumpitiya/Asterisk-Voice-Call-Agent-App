@@ -51,11 +51,82 @@
                     document.getElementById('registeredAgentExtension').textContent = `${extensionNumber}`;
                 });
             </script>
+
             <div class="navbar-right">
                 <div class="profile">
-                    <img src="../img/agent.png" alt="Call" style="width: 40px; height: 40px;">
+                    <img id="profile-img" src="../img/agent.png" alt="Profile" style="width: 40px; height: 40px;">
+                    <div id="dropdown-menu" class="dropdown-menu menu-drop-user">
+                        <a id="logout-link" class="dropdown-item logout pb-0" href="#"> <!-- Changed href for demonstration -->
+                            <img src="/client/img/log-out.svg" class="me-2" alt="Logout"/>
+                            <span class="logout-text">Logout</span>
+                        </a>
+                    </div>
                 </div>
             </div>
+            
+            <!-- Modal Structure -->
+            <div class="modal" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                        </div>
+                        <div class="modal-body-logout">
+                            <div class="logout-reasons">
+                                <p>Please select a reason for logout :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="logoutReason" id="panicLogout" value="-99">
+                                    <label class="form-check-label" for="panicLogout">
+                                        Panic Logout
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="logoutReason" id="endOfShift" value="1">
+                                    <label class="form-check-label" for="endOfShift">
+                                        End of Shift
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="logoutReason" id="systemIssue" value="2">
+                                    <label class="form-check-label" for="systemIssue">
+                                        System Issue
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-footer-logout">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="logoutCancel">Cancel</button>
+                            <button id="confirmLogoutBtn" type="button" class="btn btn-primary" >OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <script>
+               
+                document.addEventListener('DOMContentLoaded', function() {
+                    
+                    const profileImg = document.getElementById('profile-img');
+                    const dropdownMenu = document.getElementById('dropdown-menu');
+                    
+               
+                    profileImg.addEventListener('click', function() {
+                        dropdownMenu.classList.toggle('show');
+                    });
+                    
+                    document.addEventListener('click', function(event) {
+                        if (!profileImg.contains(event.target)) {
+                            dropdownMenu.classList.remove('show');
+                        }
+                    });
+                });
+
+                
+
+            </script>
+
         </div>
     </div>
 
@@ -593,6 +664,40 @@
     <script src="scripts/moment.js/moment.min.js"></script>
     <script src="../phone/scripts/indexScript.js"></script>
     
+    <script>
+        $(document).ready(function() {
+                    $('#logout-link').click(function(e) {
+                        e.preventDefault(); // Prevent the default action of the link
+
+                        // Show the modal
+                        $('#logoutModal').modal('show');
+                    });
+
+                    // Handle OK button click
+                    $('#confirmLogoutBtn').click(function() {
+                        // Get the selected reason for logout
+                        var logoutReason = $('input[name="logoutReason"]:checked').val();
+                        
+                        // Handle based on the selected reason (demo purposes)
+                        switch (logoutReason) {
+                            case "-99":
+                                alert("Panic Logout selected");
+                                break;
+                            case "1":
+                                alert("End of Shift selected");
+                                break;
+                            case "2":
+                                alert("System Issue selected");
+                                break;
+                            default:
+                                break;
+                        }
+
+                        $('#logoutModal').modal('hide');
+                    });
+                });
+
+    </script>
    
 </body>
 
