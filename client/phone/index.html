@@ -77,19 +77,19 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="logoutReason" id="panicLogout" value="-99">
                                     <label class="form-check-label" for="panicLogout">
-                                        Panic Logout
+                                        Panic Logout (-99)
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="logoutReason" id="endOfShift" value="1">
                                     <label class="form-check-label" for="endOfShift">
-                                        End of Shift
+                                        End of Shift (1)
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="logoutReason" id="systemIssue" value="2">
                                     <label class="form-check-label" for="systemIssue">
-                                        System Issue
+                                        System Issue (2)
                                     </label>
                                 </div>
                             </div>
@@ -675,44 +675,45 @@
                 return urlParams.get('extension');
             }
 
-                    $('#logout-link').click(function(e) {
-                        e.preventDefault(); // Prevent the default action of the link
+            $('#logout-link').click(function(e) {
+                e.preventDefault(); // Prevent the default action of the link
 
-                        // Show the modal
-                        $('#logoutModal').modal('show');
-                    });
-
-                   // Handle OK button click in logout modal
-        $('#confirmLogoutBtn').click(function() {
-            // Get the selected reason for logout
-            var logoutReason = $('input[name="logoutReason"]:checked').val();
-
-            // Get extension number dynamically
-            var extensionNumber = getExtensionNumber();
-
-            // Send logout request to server
-            $.ajax({
-                url: 'http://localhost:3000/auth/logout',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    extensionNumber: extensionNumber,
-                    logoutReason: logoutReason
-                }),
-                success: function(response) {
-                    console.log('Logout successful:', response);
-                    alert('Logout successful');
-                    window.location.href = '../index.html'; // Redirect to login page
-                },
-                error: function(error) {
-                    console.error('Error logging out:', error);
-                    alert('Failed to logout: ' + xhr.responseText); // Display server error message
-                }
+                // Show the modal
+                $('#logoutModal').modal('show');
             });
 
-                        $('#logoutModal').modal('hide');
-                    });
+            // Handle OK button click in logout modal
+            $('#confirmLogoutBtn').click(function() {
+                // Get the selected reason for logout
+                var logoutReason = $('input[name="logoutReason"]:checked').val();
+
+                // Get extension number dynamically
+                var extensionNumber = getExtensionNumber();
+
+                // Send logout request to server
+                $.ajax({
+                    url: 'http://localhost:3000/auth/logout',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        extensionNumber: extensionNumber,
+                        logoutReason: logoutReason
+                    }),
+                    success: function(response) {
+                        console.log('Logout successful:', response);
+                        alert('Logout successful');
+                        window.location.href = '../index.html'; // Redirect to login page
+                    },
+                    error: function(error) {
+                        console.error('Error logging out:', error);
+                        alert('Failed to logout: ' + xhr.responseText); // Display server error message
+                    }
                 });
+
+
+                    $('#logoutModal').modal('hide');
+                });
+            });
 
        
 
