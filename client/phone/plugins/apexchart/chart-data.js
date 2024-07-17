@@ -2,22 +2,35 @@
 
 $(document).ready(function() {
 
-    //service level
-    async function fetchServiceLevel() {
+    // Function to get URL parameter
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
+
+    // Get extensionNumber from URL
+    const extensionNumber = getUrlParameter('extension');
+
+    // Service Level
+    async function fetchServiceLevel(extensionNumber) {
         try {
-            const response = await fetch('http://localhost:3000/api/service-level');
+            const response = await fetch(`http://localhost:3000/api/service-level?extension=${extensionNumber}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const data = await response.json();
-            console.log("mchn level ",data.service_level);
+            console.log("mchn level", data.service_level);
             return data.service_level;
-           
         } catch (error) {
             console.error('Error fetching service level:', error);
             return 0; // Default to 0 if there's an error
         }
     }
 
-    async function renderGaugeChart() {
-        const serviceLevel = await fetchServiceLevel();
+    async function renderGaugeChart(extensionNumber) {
+        const serviceLevel = await fetchServiceLevel(extensionNumber);
         
         var options = {
             series: [serviceLevel], // Set the series value to the fetched service level
@@ -79,9 +92,9 @@ $(document).ready(function() {
         var chart = new ApexCharts(document.querySelector("#gauge_chart"), options);
         chart.render();
 
-         // Function to update the chart's series
-         async function updateGaugeChart() {
-            const newServiceLevel = await fetchServiceLevel();
+        // Function to update the chart's series
+        async function updateGaugeChart() {
+            const newServiceLevel = await fetchServiceLevel(extensionNumber);
             chart.updateSeries([newServiceLevel]);
         }
 
@@ -90,15 +103,18 @@ $(document).ready(function() {
     }
 
     if ($('#gauge_chart').length > 0) {
-        renderGaugeChart();
+        renderGaugeChart(extensionNumber);
     }
 
-    //bar chart
-    async function fetchDailyCallCounts() {
+    // Bar Chart
+    async function fetchDailyCallCounts(extensionNumber) {
         try {
-            const response = await fetch('http://localhost:3000/api/dailyCallCounts');
+            const response = await fetch(`http://localhost:3000/api/dailyCallCounts?extension=${extensionNumber}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const data = await response.json();
-            console.log("Chart Data",data);
+            console.log("Chart Data", data);
             return data;
         } catch (error) {
             console.error('Error fetching daily call counts:', error);
@@ -106,8 +122,8 @@ $(document).ready(function() {
         }
     }
 
-    async function renderBarChart() {
-        const dailyCallCounts = await fetchDailyCallCounts();
+    async function renderBarChart(extensionNumber) {
+        const dailyCallCounts = await fetchDailyCallCounts(extensionNumber);
 
         const dates = dailyCallCounts.reduce((acc, curr) => {
             if (!acc.includes(curr.date)) {
@@ -193,9 +209,9 @@ $(document).ready(function() {
         var columnChart = new ApexCharts(columnCtx, columnConfig);
         columnChart.render();
 
-         // Update the chart data every 5 seconds
-         setInterval(async () => {
-            const updatedData = await fetchDailyCallCounts();
+        // Update the chart data every 5 seconds
+        setInterval(async () => {
+            const updatedData = await fetchDailyCallCounts(extensionNumber);
 
             const updatedInboundData = dates.map(date => {
                 const count = updatedData.find(item => item.date === date && item.type === 'inbound');
@@ -221,6 +237,6 @@ $(document).ready(function() {
     }
 
     if ($('#bar_chart').length > 0) {
-        renderBarChart();
+        renderBarChart(extensionNumber);
     }
 });

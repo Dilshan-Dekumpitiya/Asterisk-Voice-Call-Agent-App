@@ -280,49 +280,57 @@
                                 </div>
 
                                 <script>
-                                    // Function to fetch data from API endpoints and update call counts
-                                    function updateTotalCallCounts() {
-                                        // Fetch inbound call count
-                                        fetch('http://localhost:3000/api/inboundCallCount')
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                const inboundCallCountElement = document.getElementById('InboundCallCount');
-                                                inboundCallCountElement.textContent = data.inbound_call_count;
-                                                return data.inbound_call_count;
-                                            })
-                                            .then(inboundCount => {
-                                                // Fetch outbound call count
-                                                return fetch('http://localhost:3000/api/outboundCallCount')
-                                                    .then(response => response.json())
-                                                    .then(data => {
-                                                        const outboundCallCountElement = document.getElementById('OutboundCallCount');
-                                                        outboundCallCountElement.textContent = data.outbound_call_count;
-                                                        return inboundCount + data.outbound_call_count;
-                                                    });
-                                            })
-                                            .then(partialTotal => {
-                                                // Fetch missed call count
-                                                return fetch('http://localhost:3000/api/missedCallCount')
-                                                    .then(response => response.json())
-                                                    .then(data => {
-                                                        const missedCallCountElement = document.getElementById('MissedCallCount');
-                                                        missedCallCountElement.textContent = data.missed_call_count;
-                                                        return partialTotal + data.missed_call_count;
-                                                    });
-                                            })
-                                            .then(total => {
-                                                // Update total call count
-                                                const totalCallCountElement = document.getElementById('TotalCallCount');
-                                                totalCallCountElement.textContent = total;
-                                            })
-                                            .catch(error => console.error('Error fetching data:', error));
-                                    }
+
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        // Retrieve extensionNumber from URL query parameter
+                                        const urlParams = new URLSearchParams(window.location.search);
+                                        const extensionNumber = urlParams.get('extension');
+                                                        
+                                        // Function to fetch data from API endpoints and update call counts
+                                        function updateTotalCallCounts() {
+                                            // Fetch inbound call count
+                                            fetch(`http://localhost:3000/api/inboundCallCount?extension=${extensionNumber}`)
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    const inboundCallCountElement = document.getElementById('InboundCallCount');
+                                                    inboundCallCountElement.textContent = data.inbound_call_count;
+                                                    return data.inbound_call_count;
+                                                })
+                                                .then(inboundCount => {
+                                                    // Fetch outbound call count
+                                                    return fetch(`http://localhost:3000/api/outboundCallCount?extension=${extensionNumber}`)
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            const outboundCallCountElement = document.getElementById('OutboundCallCount');
+                                                            outboundCallCountElement.textContent = data.outbound_call_count;
+                                                            return inboundCount + data.outbound_call_count;
+                                                        });
+                                                })
+                                                .then(partialTotal => {
+                                                    // Fetch missed call count
+                                                    return fetch(`http://localhost:3000/api/missedCallCount?extension=${extensionNumber}`)
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            const missedCallCountElement = document.getElementById('MissedCallCount');
+                                                            missedCallCountElement.textContent = data.missed_call_count;
+                                                            return partialTotal + data.missed_call_count;
+                                                        });
+                                                })
+                                                .then(total => {
+                                                    // Update total call count
+                                                    const totalCallCountElement = document.getElementById('TotalCallCount');
+                                                    totalCallCountElement.textContent = total;
+                                                })
+                                                .catch(error => console.error('Error fetching data:', error));
+                                        }
                                 
-                                    // Update call counts every 5 seconds (5000 milliseconds)
-                                    setInterval(updateTotalCallCounts, 5000);
-                                
-                                    // Initial call to update the call counts immediately on page load
-                                    updateTotalCallCounts();
+                                            // Update call counts every 5 seconds (5000 milliseconds)
+                                            setInterval(updateTotalCallCounts, 5000);
+                                        
+                                            // Initial call to update the call counts immediately on page load
+                                            updateTotalCallCounts();
+                                    });
+ 
                                 </script>
                                 
 
