@@ -217,11 +217,12 @@
                     <div id="sip-logitems"></div>
                 </div>
 
-                <!-- call controls -->
-                <div class="right-container" id="callongoing">
-
+                 <!-- call controls -->
+                 <div class="right-container" id="callongoing">
+                    
                     <div id="sip-ongoing">
-                        <div id="callTimer" style="font-size: 20px; margin-bottom: 10px;"></div>
+                        <div id="txtCallStatus" style="font-size: 20px;"></div>
+                        <!-- <div id="callTimer" style="font-size: 20px; margin-bottom: 10px;"></div> -->
                     </div>
                 </div>
 
@@ -244,6 +245,19 @@
                 <div class="right-container hidden" id="contactsContainer">
                     <div id="contactsList" class="scrollable-container"></div>
                 </div>
+
+                <div id="btnactivecall"></div>
+                <div id="outgoingCallModal" style="display: none;">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <p id="outgoingCallInfo"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div id="callTimer"></div> -->
+                <div id="inCallControls"></div>
 
                 <!-- Dashboard -->
                 <div class="right-container hidden" id="dashboardContainer">
