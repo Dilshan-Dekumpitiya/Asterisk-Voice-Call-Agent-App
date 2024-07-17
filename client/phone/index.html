@@ -665,7 +665,16 @@
     <script src="../phone/scripts/indexScript.js"></script>
     
     <script>
+        
+
         $(document).ready(function() {
+
+            // Function to retrieve extension number from URL query parameters
+            function getExtensionNumber() {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get('extension');
+            }
+
                     $('#logout-link').click(function(e) {
                         e.preventDefault(); // Prevent the default action of the link
 
@@ -673,29 +682,40 @@
                         $('#logoutModal').modal('show');
                     });
 
-                    // Handle OK button click
-                    $('#confirmLogoutBtn').click(function() {
-                        // Get the selected reason for logout
-                        var logoutReason = $('input[name="logoutReason"]:checked').val();
-                        
-                        // Handle based on the selected reason (demo purposes)
-                        switch (logoutReason) {
-                            case "-99":
-                                alert("Panic Logout selected");
-                                break;
-                            case "1":
-                                alert("End of Shift selected");
-                                break;
-                            case "2":
-                                alert("System Issue selected");
-                                break;
-                            default:
-                                break;
-                        }
+                   // Handle OK button click in logout modal
+        $('#confirmLogoutBtn').click(function() {
+            // Get the selected reason for logout
+            var logoutReason = $('input[name="logoutReason"]:checked').val();
+
+            // Get extension number dynamically
+            var extensionNumber = getExtensionNumber();
+
+            // Send logout request to server
+            $.ajax({
+                url: 'http://localhost:3000/auth/logout',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    extensionNumber: extensionNumber,
+                    logoutReason: logoutReason
+                }),
+                success: function(response) {
+                    console.log('Logout successful:', response);
+                    alert('Logout successful');
+                    window.location.href = '../index.html'; // Redirect to login page
+                },
+                error: function(error) {
+                    console.error('Error logging out:', error);
+                    alert('Failed to logout: ' + xhr.responseText); // Display server error message
+                }
+            });
 
                         $('#logoutModal').modal('hide');
                     });
                 });
+
+       
+
 
     </script>
    
