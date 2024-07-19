@@ -29,7 +29,7 @@ DB_PORT=3306
 
 - Enable WSL in Browser using https://172.20.10.100:8089/httpstatus or https://172.20.10.100:8089/ws
 
-SSL connections for are required for this to work!
+SSL connections are required to work this !
 
 
 ## Dependencies
