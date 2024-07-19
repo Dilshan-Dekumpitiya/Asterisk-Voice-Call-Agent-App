@@ -18,7 +18,7 @@ You will need a sip account on a server that supports SIP over websockets.Use As
 - Clone this project
 - `cd server` and install node modules using `npm install`
 - Create .env file as you want and add it is server folder
-- Sample 
+- .env Sample 
 ```
 DB_HOST=mysql_db_server_ip 
 DB_USER=mysql_db_user
