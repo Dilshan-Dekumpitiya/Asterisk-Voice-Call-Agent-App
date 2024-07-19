@@ -15,10 +15,18 @@ This is a Javascript based SIP client that uses WebRTC and WebSockets to connect
 
 You will need a sip account on a server that supports SIP over websockets.Use Asterisk Installed Server.
 
-- Clone this project.
-- Copy `phone/scripts/config-sample.js` to `phone/scripts/config.js`
-- Edit `phone/scripts/config.js` to reflect your sip account.
+- Clone this project
 - `cd server` and install node modules using `npm install`
+- Create .env file as you want and add it is server folder
+- Sample 
+```
+DB_HOST=mysql_db_server_ip 
+DB_USER=mysql_db_user
+DB_PASSWORD=mysql_db_password
+DB_DATABASE=mysql_db_database_name
+DB_PORT=3306
+````
+
 - Enable WSL in Browser using https://172.20.10.100:8089/httpstatus or https://172.20.10.100:8089/ws
 
 SSL connections for are required for this to work!
