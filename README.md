@@ -18,6 +18,7 @@ You will need a sip account on a server that supports SIP over websockets.Use As
 - Clone this project.
 - Copy `phone/scripts/config-sample.js` to `phone/scripts/config.js`
 - Edit `phone/scripts/config.js` to reflect your sip account.
+- `cd server` and install node modules using `npm install`
 - Enable WSL in Browser using https://172.20.10.100:8089/httpstatus or https://172.20.10.100:8089/ws
 
 SSL connections for are required for this to work!

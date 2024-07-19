@@ -974,7 +974,7 @@ $(document).ready(function () {
                 }
                 i = '<div class="list-group-item sip-logitem clearfix ' + callClass + '" data-uri="' + item.uri + '" data-sessionid="' + item.id + '" title="Double Click to Call">';
                 i += '<div class="clearfix"><div class="d-flex">';
-                i += '<div class="pull-right text-right"><strong>Unknown</strong><br></div>';
+                //i += '<div class="pull-right text-right"><strong>Unknown</strong><br></div>';
                 i += '<div class="align-items-center"><img src="' + callIconSrc + '" class="icon" alt="call icon" style="width: 20px; height: 20px;  margin-right: 5px;"> <strong>' + cllMode + '</strong>';
                 i += '</div>';
                 i += '<div class="pull-right text-right"><strong>' + moment(item.start).format('MM/DD hh:mm:ss a') + '</strong><br>' + callLength + '</div></div></div>';
